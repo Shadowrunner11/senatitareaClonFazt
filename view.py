@@ -5,6 +5,8 @@ class App(Frame):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._info=self.datos(parent)
+        self.lblAviso=Label(parent, text="")
+        self.lblAviso.pack()
         cuadro=Frame(parent)
         self.tabla=ttk.Treeview(cuadro, columns=["1", "2", "3", "4"], displaycolumns=["1", "2", "3"])
         self.tabla.grid(row=0, columnspan=2)

@@ -1,6 +1,6 @@
 from model import delProduct, getProducts, insertProduct, actuProduct
 from view import App
-from tkinter import Tk
+from tkinter import TclError, Tk
 
 
 class Controller:
@@ -16,9 +16,25 @@ class Controller:
         for nombre, precio, marca, cantidad, id in getProducts():
             a.item(a.insert(parent="", index="end", text=nombre), values=[precio, marca, cantidad, id])
     def insertar(self):
-        insertProduct(**self.App.info)
-        self.App.tabla.delete(*self.App.tabla.get_children())
-        self.refresh_table()
+        a={}
+        try:
+            a=self.App.info
+        except TclError:
+            self.App.lblAviso["text"]="Datos no validos"
+        flag=True
+        def helper():
+            try:
+                insertProduct(**a)
+                self.App.tabla.delete(*self.App.tabla.get_children())
+                self.refresh_table()
+                return "Insertando"
+            except:
+                return "Datos no validos"
+            
+        for value in a.values():
+            flag=flag and len(value)
+        self.App.lblAviso["text"]=helper() if flag else "Campos vacios"
+        
     def borrar(self):
         a=self.App.tabla
         for item in a.selection():
