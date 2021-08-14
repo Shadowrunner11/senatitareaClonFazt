@@ -44,8 +44,8 @@ def delProduct(id: int):
     session.commit()
 
 
-def actuProduct(id: int, precio):
+def actuProduct(id: int, precio, cantidad):
     a = session.query(Productos).filter(Productos.producto_id == id).first()
     a.precio = precio
-    # a.cantidad=
+    a.cantidad= cantidad
     session.commit()

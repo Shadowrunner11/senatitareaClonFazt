@@ -38,7 +38,7 @@ class Controller:
                 return "Datos no validos"
 
         for value in a.values():
-            flag = flag and len(value)
+            flag = flag and len(str(value))
         self.App.lblAviso["text"] = helper() if flag else "Campos vacios"
 
     def borrar(self):
@@ -51,7 +51,7 @@ class Controller:
     def update(self):
         a = self.App.tabla
         actuProduct(
-            int(a.item(a.selection()[0], "values")[-1]), self.App.info["precio"]
+            int(a.item(a.selection()[0], "values")[-1]), self.App.info["precio"], self.App.info["cantidad"]
         )
         self.App.tabla.delete(*self.App.tabla.get_children())
         self.refresh_table()
